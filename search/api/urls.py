@@ -1,5 +1,5 @@
 from abc import ABC, abstractmethod
-from typing import Any
+from search.target.search import Target
 
 
 class Url(ABC):
@@ -10,11 +10,11 @@ class Url(ABC):
         pass
 
 
-class HttpsUrlOf(Url):
+class GoogleSearchUrlOf(Url):
     """Gather url components together."""
 
-    def __init__(self, *url_components: Any) -> None:
-        self._url = url_components
+    def __init__(self, target: Target) -> None:
+        self._target = target
 
     def gather(self) -> str:
-        return f"https://{''.join(map(str, self._url))}"
+        return f"https://google.com/search?q={self._target.gather()}"
