@@ -21,7 +21,7 @@ class Soup(ABC):
     """Abstraction for soup web parser."""
 
     @abstractmethod
-    def links(self) -> Generator[Tag, None, None]:
+    def __iter__(self) -> Generator[Tag, None, None]:
         pass
 
 
@@ -33,9 +33,8 @@ class SoupLink(Soup):
         self._features = features
         self._css_selector = css_selector
 
-    def links(self) -> Generator[Tag, None, None]:
-        for link in BeautifulSoup(self._request.response().text(), self._features).select(self._css_selector):
-            yield link
+    def __iter__(self) -> Generator[Tag, None, None]:
+        yield from BeautifulSoup(self._request.response().text(), self._features).select(self._css_selector)
 
 
 class PageParserLink(Parser):
@@ -43,7 +42,7 @@ class PageParserLink(Parser):
 
     def __init__(self, request: Request, features: str = 'lxml', css_selector: str = '.r a') -> None:
         self._count: Iterator[int] = iter(range(3))
-        self._links: Generator[Tag, None, None] = SoupLink(request, features, css_selector).links()
+        self._links: Generator[Tag, None, None] = iter(SoupLink(request, features, css_selector))
 
     def __next__(self) -> Tag:
         next(self._count)
