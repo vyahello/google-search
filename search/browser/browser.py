@@ -1,6 +1,7 @@
 from abc import ABC, abstractmethod
 from bs4.element import Tag
 from search.api.urls import Url, GoogleUrlOf
+from search.parser.tag import HtmlTagOf
 import webbrowser
 
 
@@ -15,8 +16,8 @@ class Browser(ABC):
 class WebBrowser(Browser):
     """Represent web browser object."""
 
-    def __init__(self, parser: Tag) -> None:
-        self._url: Url = GoogleUrlOf(parser)
+    def __init__(self, tag: Tag) -> None:
+        self._url: Url = GoogleUrlOf(HtmlTagOf(tag, attribute='href'))
         self._browser = webbrowser
 
     def open(self) -> None:

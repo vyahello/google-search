@@ -1,7 +1,7 @@
 from abc import ABC, abstractmethod
 from typing import Iterable
+from search.parser.tag import HtmlTag
 from search.target.search import SearchTarget
-from bs4.element import Tag
 
 
 class Url(ABC):
@@ -15,11 +15,11 @@ class Url(ABC):
 class GoogleUrlOf(Url):
     """Gather google url components together."""
 
-    def __init__(self, tag: Tag) -> None:
+    def __init__(self, tag: HtmlTag) -> None:
         self._tag = tag
 
     def gather(self) -> str:
-        return f"https://google.com{self._tag.get('href')}"
+        return f"https://google.com{self._tag.get()}"
 
 
 class GoogleSearchUrlOf(Url):
