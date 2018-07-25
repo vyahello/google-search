@@ -1,8 +1,11 @@
 from abc import ABC, abstractmethod
 from typing import Dict, Any
+import urllib3
 from requests import Session
 from search.api.responses import Response, HttpResponse
 from search.api.urls import Url
+
+urllib3.disable_warnings(urllib3.exceptions.InsecureRequestWarning)
 
 
 class Request(ABC):
