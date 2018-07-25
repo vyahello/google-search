@@ -1,6 +1,17 @@
 # Google search
 Display 3 most precise google links in your web browser according to the search parameters
 
+## Run a google search script
+Run script from the root directory of the project:
+```bash
+~ python search.py
+```
+
+## Demo
+```bash
+~ python search.py Volodymyr Yahello vyahello
+```
+
 ## Contributing
 
 - clone the repository
