@@ -13,7 +13,7 @@ class Parser(ABC):
         pass
 
     @abstractmethod
-    def __iter__(self) -> Iterator[str]:
+    def __iter__(self) -> Iterator[Tag]:
         pass
 
 
@@ -21,7 +21,7 @@ class Soup(ABC):
     """Abstraction for soup web parser."""
 
     @abstractmethod
-    def __iter__(self) -> Generator[Tag, None, None]:
+    def __iter__(self) -> Iterator[Tag]:
         pass
 
 
@@ -29,12 +29,11 @@ class SoupLink(Soup):
     """Represent for soup web link parser."""
 
     def __init__(self, request: Request, features: str, css_selector: str) -> None:
-        self._request = request
-        self._features = features
+        self._soup = BeautifulSoup(request.response().text(), features)
         self._css_selector = css_selector
 
     def __iter__(self) -> Iterator[Tag]:
-        yield from BeautifulSoup(self._request.response().text(), self._features).select(self._css_selector)
+        yield from self._soup.select(self._css_selector)
 
 
 class PageParserLink(Parser):
