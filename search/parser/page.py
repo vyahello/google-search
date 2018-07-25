@@ -1,5 +1,5 @@
 from abc import ABC, abstractmethod
-from typing import Iterator, Generator
+from typing import Iterator
 from bs4 import BeautifulSoup
 from bs4.element import Tag
 from search.api.requests import Request
@@ -33,7 +33,7 @@ class SoupLink(Soup):
         self._features = features
         self._css_selector = css_selector
 
-    def __iter__(self) -> Generator[Tag, None, None]:
+    def __iter__(self) -> Iterator[Tag]:
         yield from BeautifulSoup(self._request.response().text(), self._features).select(self._css_selector)
 
 
@@ -42,7 +42,7 @@ class PageParserLink(Parser):
 
     def __init__(self, request: Request, features: str = 'lxml', css_selector: str = '.r a') -> None:
         self._count: Iterator[int] = iter(range(3))
-        self._links: Generator[Tag, None, None] = iter(SoupLink(request, features, css_selector))
+        self._links: Iterator[Tag] = iter(SoupLink(request, features, css_selector))
 
     def __next__(self) -> Tag:
         next(self._count)

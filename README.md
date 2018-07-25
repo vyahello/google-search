@@ -4,11 +4,6 @@ Display 3 most precise google links in your web browser according to the search 
 ## Run a google search script
 Run script from the root directory of the project:
 ```bash
-~ python search.py
-```
-
-## Demo
-```bash
 ~ python search.py Volodymyr Yahello vyahello
 ```
 
